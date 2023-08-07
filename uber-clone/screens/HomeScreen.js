@@ -11,7 +11,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   return (
     <SafeAreaView style ={tw`bg-white h-full `}>
-      <View style={ tw`p-5`}>
+      <View style={ tw`p-4`}>
        <Image 
         style={{
           width:100, height:100, resizeMode: 'contain'
@@ -22,7 +22,7 @@ const HomeScreen = () => {
        />
 
        <GooglePlacesAutocomplete
-           placeholder="where from"
+           placeholder="where from ? "
            styles={{
             container: {
               flex:0,
@@ -31,7 +31,7 @@ const HomeScreen = () => {
               fontSize:18,
             }, 
            }}
-           onPress={(data, details =null) => {
+           onPress={(data, details = null) => {
             dispatch(setOrigin({
               location:details.geometry.location,
               description: data.description,

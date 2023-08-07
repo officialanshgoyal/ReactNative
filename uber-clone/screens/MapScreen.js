@@ -23,7 +23,7 @@ const MapScreen = () => {
 
 
       <View style={tw`h-1/2`}>
-      <Text >here is the map get help </Text>
+      <Text >here is the map  </Text>
       
       <Map />
       </View>

@@ -3,7 +3,6 @@ import { KeyboardAvoidingView, Platform } from 'react-native';
 import { Provider } from "react-redux";
 import { store } from './store';
 import  HomeScreen from "./screens/HomeScreen";
-
 import { NavigationContainer} from '@react-navigation/native' ;
 import { createStackNavigator } from '@react-navigation/stack';
 import MapScreen from "./screens/MapScreen";

@@ -17,7 +17,7 @@ const Map = () => {
       useEffect ( () => {
           if (!origin ||  !destination)  return;
 
-          //zoom and fit to  markers 
+          //zoom and fit to  markers and other  
           mapRef.current.fitToSuppliedMarkers(["origin" , "destination"], {
             edgePadding: { top:50 ,right: 50 , bottom: 50 , left: 50   },
           });

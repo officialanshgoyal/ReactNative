@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setDestination , setOrigin } from "../slices/navSlice";
 import NavFavourites from "../components/NavFavourites";
 
+
 const HomeScreen = () => {
   const dispatch = useDispatch();
   return (
@@ -41,10 +42,10 @@ const HomeScreen = () => {
 
            }}
            fetchDetails={true}
-           returnKeyType={"search "}
+           returnKeyType={"search"}
            enablePoweredByContainer={false}
            minLength={2}
-          query={
+           query={
               {
                 key:GOOGLE_MAPS_APIKEY ,
                 language:"en",

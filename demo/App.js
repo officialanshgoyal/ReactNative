@@ -11,6 +11,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LocF from './LocF';
 import DriverMapView from './components/DriverView';
 import mapTest from './components/mapTest';
+import Map3 from './components/Map3';
+import Map2 from './components/Map2';
+import Map4 from './components/Map4';
+
+
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -29,6 +34,21 @@ export default function App() {
        component={Map1}
    
       />
+<Stack.Screen 
+       name="Map2"
+       component={Map2}
+   
+      />
+      <Stack.Screen 
+       name="Map3"
+       component={Map3}
+   
+      />
+     <Stack.Screen 
+       name="Map4"
+       component={Map4}
+   
+      />     
 
 
 

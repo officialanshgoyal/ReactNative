@@ -78,6 +78,8 @@ const HomeScreen = () => {
 
    
     <TouchableOpacity
+
+onPress={() => navigation.navigate('Map2')}
 >
       <View>
       <Icon  style={tw `bg-gray-100  absolute  flex-1  mr-7  right-4`}
@@ -97,7 +99,9 @@ const HomeScreen = () => {
        <Text style={tw`top-9 `} >NIRWARU - JECRC </Text>      
     </View>
 
-    <TouchableOpacity>
+    <TouchableOpacity 
+    onPress={() => navigation.navigate('Map3')}
+    >
 <Icon  style={tw `bg-gray-100  absolute z-30 mr-7 right-4 `}
  name="location-arrow" size={28} color="black" />
   <Text style={tw `bg-gray-100  absolute z-30 mr-7 right-4 mr-12 `}>TRACK</Text>
@@ -114,7 +118,8 @@ const HomeScreen = () => {
        <Text style={tw`top-9 `} >NIRWARU - JECRC </Text>      
     </View>
 
-<TouchableOpacity>
+<TouchableOpacity
+ onPress={() => navigation.navigate('Map4')}>
 <View>
 
 <Icon  style={tw `bg-gray-100  absolute z-50 mr-7 right-4 `}

@@ -32,7 +32,7 @@ const NavOptions = () => {
      keyExtractor={(item) => item.id}
      renderItem={({item })  => (
         <TouchableOpacity 
-        onPress={() => navigation.navigate(item.screen  )}
+        onPress={() => navigation.navigate(item.screen )}
         style={tw`p-3 pl-7 pb-8 pt-5 bg-gray-200 m-2 w-40 `}
         disabled={!origin}
         >

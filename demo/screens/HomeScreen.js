@@ -1,5 +1,5 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import {Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
 import tw from 'tailwind-react-native-classnames';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ChevronLeftIcon} from 'react-native-heroicons/solid';
@@ -15,7 +15,8 @@ const HomeScreen = () => {
     <View  style={tw` p-1   top-7`} >
          <View style={tw`   top-1 m-2 bg-blue-300 `}>
         <TouchableOpacity
-           onPress={() => navigation.navigate('Map1')}
+               onPress={() => navigation.navigate('Map1')}
+
                         style={{ 
                             marginRight: 329,
                             justifyContent:'flex-start', 
@@ -52,7 +53,8 @@ const HomeScreen = () => {
     {/* <View style={{flex: 1, height: 1, backgroundColor: 'black'}} /> */}
 
       <TouchableOpacity    
-       
+                     onPress={() => navigation.navigate('Map1')}
+
        >
         <View>
       <Icon  style={tw `bg-gray-100 absolute top-0  right-10`}

@@ -8,27 +8,33 @@ import { NavigationContainer} from '@react-navigation/native' ;
 import Map1 from './components/Map1';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import LocF from './LocF';
+import DriverMapView from './components/DriverView';
+import mapTest from './components/mapTest';
 
 export default function App() {
   const Stack = createStackNavigator();
   return (
 <Provider  store={store}>
 <NavigationContainer>
-<Stack.Navigator>
+<Stack.Navigator  screenOptions={{ headerShown: false }}>
     
 <Stack.Screen 
-       name="HomeScreen"
+       name="home"
        component={HomeScreen}
-       options={{ headerShown: false,}}
+       
       />
-      <Stack.Screen 
+<Stack.Screen 
        name="Map1"
        component={Map1}
-       options={{ headerShown: false,}}
+   
       />
+
+
+
     </Stack.Navigator>
     </NavigationContainer>
     </Provider>
   );
-}
+};
 

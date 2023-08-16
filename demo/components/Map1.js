@@ -6,9 +6,7 @@ import MapViewDirections from "react-native-maps-directions";
 import {GOOGLE_MAPS_APIKEY} from '@env';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Image } from 'react-native-svg';
 
-import ima from '../assets/download.png';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications

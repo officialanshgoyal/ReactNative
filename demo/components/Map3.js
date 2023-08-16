@@ -1,11 +1,45 @@
-import React, { Component, useState, useRef} from "react";
-import { StyleSheet, Text, View } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import tw from 'tailwind-react-native-classnames';
+import { StyleSheet, Text, View ,TouchableOpacity, FlatList, SafeAreaView, ImageBackground} from 'react-native';
+import React, { useState } from 'react';
+import MapView ,{Marker , Polyline} from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
-import { GOOGLE_MAPS_APIKEY } from "@env";
+import {GOOGLE_MAPS_APIKEY} from '@env';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 export default function Map3() {
+
+    const data = [
+        
+        {text:'NIRWARU'},
+        {text:'AMBEY HOSPITAL'},
+        {text:'VAIDH Jl'},
+        {text:'NATH JI Kl THADI'},
+        {text:'NIWARU BYE PASS'},
+        {text:'KHIRNI PHATAK'},          
+        {text:'HANUMAN NAGAR'},
+        {text:'VAISHALI CIRCLE'},
+        {text:'GUPTA STORE'},
+        {text:'    BHARAT APPARTMENT'}, 
+        {text:'AKSHAR DHAM'},          
+        {text:'CHITRAKOOT'},
+        {text:'CHITRAKOOT BANK CIRCLE'},
+        {text:'DABAS PULIA'},
+        {text:'200 FEET BYEPASS'}, 
+        {text:'PUNJABI DHABA'},
+        {text:'OM HOTEL'},
+        {text:'METRO STATION'},
+        {text:'JECRC COLLEGE'}, 
+        {text:'END'}
+        
+     
+      ];
+
     const [state ] = useState({
       loca : {
         latitude :26.932834,
@@ -32,8 +66,8 @@ export default function Map3() {
        longitudeDelta: 0.005,
       },
       loce: {
-        latitude :26.879623,
-        longitude : 75.743379,
+        latitude :26.886170,
+        longitude : 75.744620,
         latitudeDelta: 0.005,
        longitudeDelta: 0.005,
       },
@@ -43,24 +77,19 @@ export default function Map3() {
         latitudeDelta: 0.005,
        longitudeDelta: 0.005,
       },
-      locg: {
-        latitude :26.834543,
-        longitude : 75.836525,
-        latitudeDelta: 0.005,
-       longitudeDelta: 0.005,
-      },
+  
       loch: {
-        latitude :26.850881,
-        longitude :75.754853,
+        latitude :26.889768,
+        longitude :75.768554,
         latitudeDelta: 0.005,
        longitudeDelta: 0.005,
       },
-      loci: {
-        latitude :26889481.,
-        longitude :75.758655,
-        latitudeDelta: 0.005,
-       longitudeDelta: 0.005,
-      },
+     // loci: {
+       // latitude :26.887194,
+       // longitude :75.768246,
+       // latitudeDelta: 0.005,
+     //  longitudeDelta: 0.005,
+     // },
       locj: {
         latitude :26.888786,
         longitude :75.768446,
@@ -92,8 +121,8 @@ export default function Map3() {
        longitudeDelta: 0.005,
       },
       loco: {
-        latitude :26.852188,
-        longitude : 75.786238,
+        latitude :26.850098,
+        longitude : 75.794182,
         latitudeDelta: 0.005,
        longitudeDelta: 0.005,
       },
@@ -114,9 +143,12 @@ export default function Map3() {
   
     })
     
-  const {loca,locb,locc,locd,loce,locf,locg,loch,loci,locj,lockk,locl,locm,locn,loco,locp,locq} = state
+  const {loca,locb,locc,locd,loce,locf,loch,locj,lockk,locl,locm,locn,loco,locp,locq} = state
   
     return (
+   <SafeAreaView>
+        <View style={tw`flex:1`}>
+          <View  style={tw`flex:1  h-1/2`}>
       
      
      <MapView
@@ -153,18 +185,13 @@ export default function Map3() {
       coordinate={ locf }
       title=" SHYAM NAGAR"
     />
-  <Marker
-      coordinate={locg }
-      title="LAZIZ RESTAURANT"
-    />
+ 
   <Marker
       coordinate={ loch }
       title=" SANJEEVANI HOSPITAL  "
     />
-    <Marker
-      coordinate={ loci}
-      title=" DAVI NAGAR"
-    />
+    
+
     <Marker
       coordinate={locj}
       title="VIVEK VIHAR "
@@ -232,24 +259,16 @@ export default function Map3() {
     />
    <MapViewDirections 
     origin = {locf} 
-    destination={locg}
-    apikey={GOOGLE_MAPS_APIKEY}
-    />
-  <MapViewDirections 
-    origin = {locg} 
     destination={loch}
     apikey={GOOGLE_MAPS_APIKEY}
     />
+ 
   <MapViewDirections 
     origin = {loch} 
-    destination={loci}
-    apikey={GOOGLE_MAPS_APIKEY}
-    />
-  <MapViewDirections 
-    origin = {loci} 
     destination={locj}
     apikey={GOOGLE_MAPS_APIKEY}
     />
+ 
   <MapViewDirections 
     origin = {locj} 
     destination={lockk}
@@ -286,13 +305,89 @@ export default function Map3() {
     apikey={GOOGLE_MAPS_APIKEY}
     />
  
-  
-  
-  
   </MapView>
+    </View>
+
+
   
+<View  style={tw`flex:1  h-1/2 bg-white `}>
+<Text  style={tw` text-2xl top-2 text-center font-bold bg-current ` }>
+  Route Details
+</Text>
+<View style={tw `border-t border-black mt-2`}></View>
+
+<View  style={tw`aligned-center flex:1  rounded-half  top-4 justify-evenly justify-center h-3/4 bottom-32`}>
+
+  <FlatList 
+
+    data={data}
+    keyExtractor={(index) => index.toString()}
+    renderItem={({ item ,index}) => (
+    <View style={tw`text-center justify-center `}>
+
+           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+       <Text style={tw` mx-28 text-center bg-green-400 `}>{item.text}</Text>     
+       <MIcon 
+       style={tw` mx-28 bottom-5`}
+       name="bus-stop" size={20} color="red" /> 
+
+    </View>      
+  )}
+
+
+  />
+</View>
+
+    
+
+
+
+
+
+
+
+  <View   style={tw` flex:1 rounded-full  bg-blue-300 h-1/4 bottom-11`}>
+   <Icon style={tw`  top-8 left-2 absolute  `}
+       name="user-circle" size={50} color="white" />
+  
+  <Text   style={tw` text-xl  text-center  font-bold ` }>
+  
+    Driver Details
+    
+  </Text>
+ <Text  style={tw`  left-16` }>
+  Name: Ram ji
+ </Text>
+ <Text  style={tw`  left-16` }>
+  Contact no: 48942454
+ </Text>
+ <Text  style={tw`  left-16` }>
+  Bus No: RJ14GC7643
+ </Text>
+ 
+
+  </View>
+
+</View>
+  </View>
+  </SafeAreaView>
     );
   };
+
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+
+
+
+
   
   
   

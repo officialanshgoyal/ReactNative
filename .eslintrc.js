@@ -1,4 +1,5 @@
 module.exports = {
+    
     "env": {
         "browser": true,
         "es2021": true
@@ -28,5 +29,8 @@ module.exports = {
         "react"
     ],
     "rules": {
-    }
+        "prettier/prettier" :0
+    },
+
+   
 }

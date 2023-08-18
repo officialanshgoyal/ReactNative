@@ -1,19 +1,11 @@
 import React, { Component, useState, useEffect, useRef} from "react";
-import { StyleSheet, Text, View,SafeAreaView,FlatList } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { FIREBASE_DB } from '../FirebaseConfig';
 import { onValue, off, ref } from 'firebase/database';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-import tw from 'tailwind-react-native-classnames';
-import {LinearGradient} from 'expo-linear-gradient';
-
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 export default function MapTest() {
@@ -23,8 +15,10 @@ export default function MapTest() {
   useEffect(() => {
     const db = FIREBASE_DB;
     const dbPath = 'user'; // Change this path to match your Firebase data structure
+
     const fetchData = () => {
       const databaseRef = ref(db, dbPath);
+
       onValue(databaseRef, (snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
@@ -168,39 +162,12 @@ export default function MapTest() {
       },
   
     })
-
-    const name = [
-        
-      {text:'NIRWARU'},
-      {text:'AMBEY HOSPITAL'},
-      {text:'VAIDH Jl'},
-      {text:'NATH JI Kl THADI'},
-      {text:'NIWARU BYE PASS'},
-      {text:'KHIRNI PHATAK'},          
-      {text:'HANUMAN NAGAR'},
-      {text:'VAISHALI CIRCLE'},
-      {text:'GUPTA STORE'},
-      {text:'    BHARAT APPARTMENT'}, 
-      {text:'AKSHAR DHAM'},          
-      {text:'CHITRAKOOT'},
-      {text:'CHITRAKOOT BANK CIRCLE'},
-      {text:'DABAS PULIA'},
-      {text:'200 FEET BYEPASS'}, 
-      {text:'PUNJABI DHABA'},
-      {text:'OM HOTEL'},
-      {text:'METRO STATION'},
-      {text:'JECRC COLLEGE'}, 
-      {text:'END'}
-      
-   
-    ];
-
+    
   const {loca,locb,locc,locd,loce,locf,locg,loch,loci,locj,lockk,locl,locm,locn,loco,locp,locq,locr,locs} = state
   
-    return (  
-        <SafeAreaView>
-        <View style={tw`flex:1`}>
-          <View  style={tw`  h-1/2`}>      
+    return (
+      
+     
      <MapView
     style={{ flex: 1 }}
     initialRegion={{
@@ -209,8 +176,8 @@ export default function MapTest() {
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     }}
-    >
-    <Marker
+  >
+      <Marker
             coordinate={{ latitude, longitude }}
             title="Driver Location"
             description="Latest driver location"
@@ -392,94 +359,10 @@ export default function MapTest() {
   
   
   
-  </MapView>
-</View>
-
-
-
-<View  style={tw`  h-1/2 bg-white `}>
-<Text  style={tw` text-2xl top-2 text-center font-bold  ` }>
-  Route Details
-</Text>
-<View style={tw `border-t border-black mt-3`}></View>
-
-<View  style={tw`aligned-center  rounded-half  top-2 justify-evenly justify-center h-3/4 bottom-32`}>
-<View   style={{height: '100%', width: '100%'}}>
-    <LinearGradient 
-     colors={['#f9f8dd', '#302a75']} 
-      style={{height: '100%'}}> 
-  <View>
-  <FlatList 
-
-    data={name}
-    keyExtractor={(inx) => inx.toString()}
-    renderItem={({ item ,inx}) => (
-    <View style={tw`text-center justify-center `}>
-
-           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
-           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
-       <Text style={tw` mx-28 text-center  `}>{item.text}</Text>     
-       <MIcon 
-       style={tw` mx-28 bottom-5`}
-       name="bus-stop" size={20} color="red" /> 
-
-    </View> 
-         
-  )}
-
-
-  />
-  </View>
-   </LinearGradient>
-</View>
-</View>
-    
-
-
-
-
-
-
-
-  <View 
-    
-    style={tw` flex:1  bg-gray-300 h-1/4 bottom-11`}>
-   <Icon style={tw`  top-8 left-2 absolute  `}
-       name="user-circle" size={50} color="white" />
- 
-  <Text   style={tw` text-xl  text-center  font-bold ` }>
   
-    Driver Details
-    
-  </Text>
- <Text  style={tw`  left-16` }>
-  Name: Ram ji
- </Text>
- <Text  style={tw`  left-16` }>
-  Contact no: 48942454
- </Text>
- <Text  style={tw`  left-16` }>
-  Bus No: RJ14GC7643
- </Text>
- 
- 
-  </View>
-
-</View>
-  </View>
-  </SafeAreaView>
+  </MapView>
+  
     );
   };
-
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-
-
-
+  
+  

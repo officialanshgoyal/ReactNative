@@ -1,18 +1,57 @@
 import tw from 'tailwind-react-native-classnames';
-import { StyleSheet, Text, View ,TouchableOpacity, FlatList, SafeAreaView, ImageBackground} from 'react-native';
-import React, { useState } from 'react';
-import MapView ,{Marker , Polyline} from 'react-native-maps';
+import { StyleSheet, Text, View ,TouchableOpacity, FlatList, SafeAreaView, ImageBackground, Button} from 'react-native';
+import React, { useState,useEffect } from 'react';
+import MapView ,{Marker} from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
 import {GOOGLE_MAPS_APIKEY} from '@env';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import { FIREBASE_DB } from '../FirebaseConfig';
+import { onValue, off, ref } from 'firebase/database';
+import {LinearGradient} from 'expo-linear-gradient';
 
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
   export default function Map1 () {
-    const data = [
+    const [latitude, setLatitude] = useState(0);
+    const [longitude, setLongitude] = useState(0);
+  
+    useEffect(() => {
+      const db = FIREBASE_DB;
+      const dbPath = 'user'; // Change this path to match your Firebase data structure  
+      const fetchData = () => {
+        const databaseRef = ref(db, dbPath);
+  
+        onValue(databaseRef, (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            const keys = Object.keys(data);
+            const lastKey = keys[keys.length - 1];
+            const latestData = data[lastKey];
+            setLatitude(latestData.latitude);
+            setLongitude(latestData.longitude);
+          }
+        });
+      };
+  
+      // Fetch data initially
+      fetchData();
+  
+      // Set up interval to fetch data every 15 seconds
+      const intervalId = setInterval(fetchData, 30000);
+  
+      // Clean up interval and data listener when component unmounts
+      return () => {
+        clearInterval(intervalId);
+        off(databaseRef);
+      };
+    }, []);
+
+    
+    const name = [
         
       {text:'NIRWARU'},
       {text:'AMBEY HOSPITAL'},
@@ -39,7 +78,6 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
     ];
 
 
-    
 
     const [state ] = useState({
       loca : {
@@ -165,7 +203,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
     return (     
       <SafeAreaView>
       <View style={tw`flex:1`}>
-        <View  style={tw`flex:1  h-1/2`}>
+        <View  style={tw`  h-1/2`}>
      <MapView
     style={{ flex: 1 }}
     initialRegion={{
@@ -357,35 +395,42 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 
-<View  style={tw`flex:1  h-1/2 bg-white `}>
-<Text  style={tw` text-2xl top-2 text-center font-bold bg-current ` }>
+<View  style={tw`  h-1/2 bg-white `}>
+<Text  style={tw` text-2xl top-2 text-center font-bold  ` }>
   Route Details
 </Text>
-<View style={tw `border-t border-black mt-2`}></View>
+<View style={tw `border-t border-black mt-3`}></View>
 
-<View  style={tw`aligned-center flex:1  rounded-half  top-4 justify-evenly justify-center h-3/4 bottom-32`}>
-
+<View  style={tw`aligned-center  rounded-half  top-2 justify-evenly justify-center h-3/4 bottom-32`}>
+<View   style={{height: '100%', width: '100%'}}>
+    <LinearGradient 
+     colors={['#f9f8dd', '#302a75']} 
+      style={{height: '100%'}}> 
+  <View>
   <FlatList 
 
-    data={data}
-    keyExtractor={(index) => index.toString()}
-    renderItem={({ item ,index}) => (
+    data={name}
+    keyExtractor={(inx) => inx.toString()}
+    renderItem={({ item ,inx}) => (
     <View style={tw`text-center justify-center `}>
 
-           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
-           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
-       <Text style={tw` mx-28 text-center bg-green-400 `}>{item.text}</Text>     
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+       <Text style={tw` mx-28 text-center  `}>{item.text}</Text>     
        <MIcon 
        style={tw` mx-28 bottom-5`}
        name="bus-stop" size={20} color="red" /> 
 
-    </View>      
+    </View> 
+         
   )}
 
 
   />
+  </View>
+   </LinearGradient>
 </View>
-
+</View>
     
 
 
@@ -394,10 +439,12 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 
-  <View   style={tw` flex:1 rounded-full  bg-blue-300 h-1/4 bottom-11`}>
+  <View 
+    
+    style={tw` flex:1  bg-gray-300 h-1/4 bottom-11`}>
    <Icon style={tw`  top-8 left-2 absolute  `}
        name="user-circle" size={50} color="white" />
-  
+ 
   <Text   style={tw` text-xl  text-center  font-bold ` }>
   
     Driver Details
@@ -413,7 +460,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
   Bus No: RJ14GC7643
  </Text>
  
-
+ 
   </View>
 
 </View>

@@ -1,11 +1,15 @@
 import tw from 'tailwind-react-native-classnames';
 import { StyleSheet, Text, View ,TouchableOpacity, FlatList, SafeAreaView, ImageBackground} from 'react-native';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import MapView ,{Marker , Polyline} from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
 import {GOOGLE_MAPS_APIKEY} from '@env';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import { FIREBASE_DB } from '../FirebaseConfig';
+import { onValue, off, ref } from 'firebase/database';
+
 
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
@@ -14,31 +18,79 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function Map3() {
 
-    const data = [
+    const name = [
         
-        {text:'NIRWARU'},
-        {text:'AMBEY HOSPITAL'},
-        {text:'VAIDH Jl'},
-        {text:'NATH JI Kl THADI'},
-        {text:'NIWARU BYE PASS'},
-        {text:'KHIRNI PHATAK'},          
-        {text:'HANUMAN NAGAR'},
-        {text:'VAISHALI CIRCLE'},
-        {text:'GUPTA STORE'},
-        {text:'    BHARAT APPARTMENT'}, 
-        {text:'AKSHAR DHAM'},          
-        {text:'CHITRAKOOT'},
-        {text:'CHITRAKOOT BANK CIRCLE'},
-        {text:'DABAS PULIA'},
-        {text:'200 FEET BYEPASS'}, 
-        {text:'PUNJABI DHABA'},
-        {text:'OM HOTEL'},
-        {text:'METRO STATION'},
+        {text:'GANDHI NAGAR PULIYA'},
+        {text:'CHITRAKOOT CHAURAHA'},
+        {text:'AKSHAR DHAM'},
+        {text:'SBI BANK'},
+        {text:'NIRMAN NAGAR'},
+        {text:'SHYAM NAGAR'},          
+        {text:'SANJEEVANI HOSPITAL'},
+        
+        {text:'VIVEK VIHAR'},
+        {text:'GURJAR KI THADI'}, 
+        {text:'RIDDHI SIDDHI'},   
+
+        {text:'TRIVENI NAGAR CHAURAHA'},
+        {text:'GOPAL PURA CHOKI'},
+        {text:' MAHAVEER NAGAR'},
+        {text:'DURGAPURA ROAD'}, 
+        
         {text:'JECRC COLLEGE'}, 
         {text:'END'}
         
      
       ];
+
+
+
+
+      const [latitude, setLatitude] = useState(0);
+      const [longitude, setLongitude] = useState(0);
+    
+      useEffect(() => {
+        const db = FIREBASE_DB;
+        const dbPath = 'user'; // Change this path to match your Firebase data structure
+    
+        const fetchData = () => {
+          const databaseRef = ref(db, dbPath);
+    
+          onValue(databaseRef, (snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              const keys = Object.keys(data);
+              const lastKey = keys[keys.length - 1];
+              const latestData = data[lastKey];
+              setLatitude(latestData.latitude);
+              setLongitude(latestData.longitude);
+            }
+          });
+        };
+    
+        // Fetch data initially
+        fetchData();
+    
+        // Set up interval to fetch data every 15 seconds
+        const intervalId = setInterval(fetchData, 30000);
+    
+        // Clean up interval and data listener when component unmounts
+        return () => {
+          clearInterval(intervalId);
+          off(databaseRef);
+        };
+      }, []);
+
+
+
+
+
+
+
+
+
+
+
 
     const [state ] = useState({
       loca : {
@@ -320,13 +372,13 @@ export default function Map3() {
 
   <FlatList 
 
-    data={data}
-    keyExtractor={(index) => index.toString()}
-    renderItem={({ item ,index}) => (
+    data={name}
+    keyExtractor={(inx) => inx.toString()}
+    renderItem={({ item ,inx}) => (
     <View style={tw`text-center justify-center `}>
 
-           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
-           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
        <Text style={tw` mx-28 text-center bg-green-400 `}>{item.text}</Text>     
        <MIcon 
        style={tw` mx-28 bottom-5`}

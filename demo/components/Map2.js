@@ -1,12 +1,89 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import tw from 'tailwind-react-native-classnames';
+import { StyleSheet, Text, View ,TouchableOpacity, FlatList, SafeAreaView, ImageBackground} from 'react-native';
+import React, { useState,useEffect } from 'react';
 import MapView ,{Marker , Polyline} from 'react-native-maps';
-// import tw from "tailwind-react-native-classnames";
 import MapViewDirections from "react-native-maps-directions";
-import {GOOGLE_MAPS_APIKEY}  from "@env";
+import {GOOGLE_MAPS_APIKEY} from '@env';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import { FIREBASE_DB } from '../FirebaseConfig';
+import { onValue, off, ref } from 'firebase/database';
+
+
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function App() {
+
+  const name= [
+        
+    {text:'MEENA PETROL PUMP'},
+    {text:'KHOLE KE HANUMAN JI'},
+    {text:'RAMGRAH MODE'},
+    {text:'DUSSEHRA KOTHI'},
+    {text:'JORAWAR SINGH GATE'},
+    {text:'BADI CHOPAR'},          
+    {text:'JOHARI BAZAR'},
+    {text:'NEW GATE'},
+    {text:'AJMERI GATE'},
+    {text:' S M.S HOSPITAL'}, 
+    {text:'LAL KOTHI'},          
+    {text:'GANDHI NAGAR CLUB'},
+    {text:'AG COLANY'},
+    {text:'BHARADWAJ PETROL PUMP'},
+    {text:'JAWAHAR CIRCLE'}, 
+    {text:'JECRC COLLEGE'}, 
+    {text:'END'}
+    
+ 
+  ];
+
+
+
+
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  useEffect(() => {
+    const db = FIREBASE_DB;
+    const dbPath = 'user'; // Change this path to match your Firebase data structure
+
+    const fetchData = () => {
+      const databaseRef = ref(db, dbPath);
+
+      onValue(databaseRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const keys = Object.keys(data);
+          const lastKey = keys[keys.length - 1];
+          const latestData = data[lastKey];
+          setLatitude(latestData.latitude);
+          setLongitude(latestData.longitude);
+        }
+      });
+    };
+
+    // Fetch data initially
+    fetchData();
+
+    // Set up interval to fetch data every 15 seconds
+    const intervalId = setInterval(fetchData, 30000);
+
+    // Clean up interval and data listener when component unmounts
+    return () => {
+      clearInterval(intervalId);
+      off(databaseRef);
+    };
+  }, []);
+
+
+
+
+
+
+
   const [state ] = useState({
     loca : {
       latitude :26.92275,
@@ -108,10 +185,12 @@ export default function App() {
 
   })
   
-const {loca,locb,locc,locd,loce,locf,locg,loch,loci,locj,lockk,locl,locm,locn,loco,locp,} = state
+const {loca,locb,locc,locd,loce,locf,loch,loci,locj,lockk,locl,locm,locn,loco,locp,} = state
 
   return (
-    
+     <SafeAreaView>
+      <View style={tw`flex:1`}>
+        <View  style={tw`flex:1  h-1/2`}>
    
    <MapView
   style={{ flex: 1 }}
@@ -265,22 +344,85 @@ const {loca,locb,locc,locd,loce,locf,locg,loch,loci,locj,lockk,locl,locm,locn,lo
   apikey={GOOGLE_MAPS_APIKEY}
   />
 
-
-
-
-
-
-
 </MapView>
-
-  );
-};
+</View>
 
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+<View  style={tw`flex:1  h-1/2 bg-white `}>
+<Text  style={tw` text-2xl top-2 text-center font-bold bg-current ` }>
+  Route Details
+</Text>
+<View style={tw `border-t border-black mt-2`}></View>
+
+<View  style={tw`aligned-center flex:1  rounded-half  top-4 justify-evenly justify-center h-3/4 bottom-32`}>
+
+  <FlatList 
+
+    data={name}
+    keyExtractor={(inx) => inx.toString()}
+    renderItem={({ item ,inx}) => (
+    <View style={tw`text-center justify-center `}>
+
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+       <Text style={tw` mx-28 text-center bg-green-400 `}>{item.text}</Text>     
+       <MIcon 
+       style={tw` mx-28 bottom-5`}
+       name="bus-stop" size={20} color="red" /> 
+
+    </View>      
+  )}
+
+
+  />
+</View>
+
+    
+
+
+
+
+
+
+
+  <View   style={tw` flex:1 rounded-full  bg-blue-300 h-1/4 bottom-11`}>
+   <Icon style={tw`  top-8 left-2 absolute  `}
+       name="user-circle" size={50} color="white" />
+  
+  <Text   style={tw` text-xl  text-center  font-bold ` }>
+  
+    Driver Details
+    
+  </Text>
+ <Text  style={tw`  left-16` }>
+  Name: Ram ji
+ </Text>
+ <Text  style={tw`  left-16` }>
+  Contact no: 48942454
+ </Text>
+ <Text  style={tw`  left-16` }>
+  Bus No: RJ14GC7643
+ </Text>
+ 
+
+  </View>
+
+</View>
+  </View>
+  </SafeAreaView>
+    );
+  };
+
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
+
+
+

@@ -1,10 +1,10 @@
-import {Text, TouchableOpacity, View } from 'react-native';
+import {Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import React from 'react';
 import tw from 'tailwind-react-native-classnames';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ChevronLeftIcon} from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
-
+import LottieView from 'lottie-react-native';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -15,7 +15,7 @@ const HomeScreen = () => {
     <View  style={tw` p-1   top-7`} >
          <View style={tw`   top-1 m-2 bg-blue-300 `}>
         <TouchableOpacity
-               onPress={() => navigation.navigate('Map1')}
+               onPress={() => navigation.navigate('MapTest')}
 
                         style={{ 
                             marginRight: 329,
@@ -39,6 +39,12 @@ const HomeScreen = () => {
    
         <Text style={tw` bottom-4 text-center justify-evenly text-3xl  font-bold`}> Select Route </Text>
     </View>
+
+    <View style={tw`h-1/6 w-full `}>
+                             
+                             <LottieView source={require('../assets/animation_llerbn4r.json')} autoPlay loop />
+                     </View>
+
 
 
     <View style={{ marginTop: 35}} >
@@ -119,7 +125,7 @@ onPress={() => navigation.navigate('Map2')}
     </View>
 
 <TouchableOpacity
- onPress={() => navigation.navigate('Map4')}>
+ onPress={() => navigation.navigate('Map_route1')}>
 <View>
 
 <Icon  style={tw `bg-gray-100  absolute z-50 mr-7 right-4 `}
@@ -153,3 +159,16 @@ onPress={() => navigation.navigate('Map2')}
 }
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+});
+
+
+

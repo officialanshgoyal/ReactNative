@@ -213,22 +213,22 @@ export default function Map3() {
     }}
   >
   
+        <Marker
+        coordinate={loca}
+        title="GANDHI NAGAR PULIYA"
+      />
       <Marker
-      coordinate={loca}
-      title="GANDHI NAGAR PULIYA"
-    />
+        coordinate={locb}
+        title="CHITRAKOOT CHAURAHA"
+      />
     <Marker
-      coordinate={locb}
-      title="CHITRAKOOT CHAURAHA"
-    />
-  <Marker
-      coordinate={ locc}
-      title="AKSHAR DHAM "
-    />
-  <Marker
-      coordinate={ locd}
-      title="SBI BANK"
-    />
+        coordinate={ locc}
+        title="AKSHAR DHAM "
+      />
+    <Marker
+        coordinate={ locd}
+        title="SBI BANK"
+      />
   <Marker
       coordinate={ loce }
       title="NIRMAN NAGAR"

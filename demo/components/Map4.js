@@ -18,7 +18,7 @@ LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function Map2() {
 
-  const data = [
+  const name = [
         
     {text:'KHORA BEESAL'},
 
@@ -251,6 +251,13 @@ export default function Map2() {
       longitudeDelta: 0.0421,
     }}
   >
+
+<Marker
+            coordinate={{ latitude, longitude }}
+            title="Driver Location"
+            description="Latest driver location"
+      />
+      
   
       <Marker
       coordinate={loca}
@@ -471,13 +478,13 @@ export default function Map2() {
 
   <FlatList 
 
-    data={data}
-    keyExtractor={(index) => index.toString()}
-    renderItem={({ item ,index}) => (
+    data={name}
+    keyExtractor={(inx) => inx.toString()}
+    renderItem={({ item ,inx}) => (
     <View style={tw`text-center justify-center `}>
 
-           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
-           {index > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
+           {inx > 0 && <Text style={tw` mx-48 `}>•</Text>} 
        <Text style={tw` mx-28 text-center bg-green-400 `}>{item.text}</Text>     
        <MIcon 
        style={tw` mx-28 bottom-5`}
@@ -489,11 +496,7 @@ export default function Map2() {
 
   />
 </View>
-
-    
-
-
-
+   
   <View   style={tw` flex:1 rounded-full  bg-blue-300 h-1/4 bottom-11`}>
    <Icon style={tw`  top-8 left-2 absolute  `}
        name="user-circle" size={50} color="white" />
